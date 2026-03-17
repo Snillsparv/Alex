@@ -4,6 +4,8 @@ const checkBtn = document.getElementById('check-btn');
 const phaseEl = document.getElementById('phase');
 const timerEl = document.getElementById('timer');
 const resultEl = document.getElementById('result');
+const modeButtons = [...document.querySelectorAll('.mode-btn')];
+const paintButtons = [...document.querySelectorAll('.paint-btn')];
 
 const SIZE = 36;
 const MEMORIZE_SECONDS = 60;
@@ -15,6 +17,7 @@ let userGrid = Array(SIZE).fill(0);
 let secondsLeft = MEMORIZE_SECONDS;
 let timerId;
 let checked = false;
+let selectedPaint = 0;
 
 function buildBoard() {
   boardEl.innerHTML = '';
@@ -61,6 +64,32 @@ function paintGrid(values) {
   });
 }
 
+function setMode(nextMode) {
+  mode = nextMode;
+  modeButtons.forEach((btn) => {
+    const active = Number(btn.dataset.mode) === mode;
+    btn.classList.toggle('active', active);
+  });
+  updatePaintAvailability();
+}
+
+function setSelectedPaint(color) {
+  selectedPaint = color;
+  paintButtons.forEach((btn) => {
+    btn.classList.toggle('active', Number(btn.dataset.color) === selectedPaint);
+  });
+}
+
+function updatePaintAvailability() {
+  const blueBtn = paintButtons.find((btn) => Number(btn.dataset.color) === 3);
+  if (!blueBtn) return;
+  const showBlue = mode === 3;
+  blueBtn.style.display = showBlue ? 'block' : 'none';
+  if (!showBlue && selectedPaint === 3) {
+    setSelectedPaint(0);
+  }
+}
+
 function updateTimer() {
   timerEl.textContent = String(secondsLeft);
 }
@@ -73,6 +102,7 @@ function beginMemorize() {
   updateTimer();
   targetGrid = generateTargetGrid();
   userGrid = Array(SIZE).fill(0);
+  setSelectedPaint(1);
   paintGrid(targetGrid);
   resultEl.textContent = '';
   phaseEl.textContent = 'Memorera mönstret.';
@@ -90,15 +120,14 @@ function beginMemorize() {
 
 function beginInput() {
   phase = 'input';
-  phaseEl.textContent = 'Fyll i rutorna och tryck på Rätta.';
+  phaseEl.textContent = 'Välj färg längst ner och klicka i rutorna. Tryck sedan på Rätta.';
   paintGrid(userGrid);
   checkBtn.disabled = false;
 }
 
 function onCellClick(index) {
   if (phase !== 'input') return;
-  const maxColor = mode === 2 ? 2 : 3;
-  userGrid[index] = (userGrid[index] + 1) % (maxColor + 1);
+  userGrid[index] = selectedPaint;
   const cell = boardEl.children[index];
   cell.dataset.color = String(userGrid[index]);
   if (checked) {
@@ -142,27 +171,27 @@ function checkAnswer() {
   resultEl.textContent = `Rätt färg på ${coloredCorrect}/${coloredTarget} markerade rutor. Exakt totalträff: ${exactMatches}/36.`;
 }
 
-function readMode() {
-  const chosen = document.querySelector('input[name="mode"]:checked');
-  mode = Number(chosen.value);
-}
-
-startBtn.addEventListener('click', () => {
-  readMode();
-  beginMemorize();
-});
-
-checkBtn.addEventListener('click', checkAnswer);
-
-document.querySelectorAll('input[name="mode"]').forEach((input) => {
-  input.addEventListener('change', () => {
-    readMode();
+modeButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    setMode(Number(button.dataset.mode));
     if (phase === 'idle') {
       resultEl.textContent = 'Läge ändrat. Starta en ny omgång.';
     }
   });
 });
 
+paintButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    if (phase !== 'input') return;
+    setSelectedPaint(Number(button.dataset.color));
+  });
+});
+
+startBtn.addEventListener('click', beginMemorize);
+checkBtn.addEventListener('click', checkAnswer);
+
+setMode(2);
+setSelectedPaint(0);
 buildBoard();
 updateTimer();
 

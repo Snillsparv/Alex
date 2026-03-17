@@ -10,47 +10,54 @@
   </head>
   <body>
     <main class="app">
-      <h1>Rutnätsminne</h1>
-      <p class="subtitle">Memorera mönstret på 60 sekunder, fyll i och rätta.</p>
+      <header class="top">
+        <h1>Rutnätsminne</h1>
+        <p class="subtitle">Memorera mönstret i 60 sekunder. Fyll i och rätta.</p>
+      </header>
 
-      <section class="controls">
-        <fieldset>
-          <legend>Färgläge</legend>
-          <label>
-            <input type="radio" name="mode" value="2" checked />
-            2 färger (12 gula + 12 lila)
-          </label>
-          <label>
-            <input type="radio" name="mode" value="3" />
-            3 färger (9 gula + 9 lila + 9 blå)
-          </label>
-        </fieldset>
-
-        <div class="buttons">
-          <button id="start-btn">Starta ny omgång</button>
-          <button id="check-btn" disabled>Rätta</button>
+      <section class="panel">
+        <p class="label">Välj läge</p>
+        <div class="mode-buttons">
+          <button id="mode-2" class="mode-btn active" data-mode="2">2 färger<br /><small>12 gula + 12 lila</small></button>
+          <button id="mode-3" class="mode-btn" data-mode="3">3 färger<br /><small>9 gula + 9 lila + 9 blå</small></button>
         </div>
 
-        <div class="status">
-          <p><strong>Fas:</strong> <span id="phase">Tryck på “Starta ny omgång”.</span></p>
-          <p><strong>Tid kvar:</strong> <span id="timer">60</span> sek</p>
-          <p id="result"></p>
+        <div class="main-actions">
+          <button id="start-btn" class="primary">Starta ny omgång</button>
+          <button id="check-btn" class="secondary" disabled>Rätta</button>
         </div>
+
+        <div class="timer-box">
+          <p class="timer-label">Tid kvar</p>
+          <p id="timer" class="timer">60</p>
+        </div>
+
+        <p><strong>Fas:</strong> <span id="phase">Tryck på “Starta ny omgång”.</span></p>
+        <p id="result" class="result"></p>
       </section>
 
       <section class="board-wrapper">
         <div id="board" class="board" aria-label="6 gånger 6 rutnät"></div>
       </section>
 
-      <details class="legend">
-        <summary>Färger i fyll-i-fas</summary>
-        <ul>
-          <li><span class="dot yellow"></span> Gul</li>
-          <li><span class="dot purple"></span> Lila</li>
-          <li><span class="dot blue"></span> Blå (bara i 3-färgersläge)</li>
-          <li>Tryck flera gånger på en ruta för att växla färg.</li>
-        </ul>
-      </details>
+      <section class="panel palette-panel">
+        <p class="label">Färg att fylla i (under återkallning)</p>
+        <div class="palette" id="palette">
+          <button class="paint-btn active" data-color="0">Tom</button>
+          <button class="paint-btn" data-color="1">Gul</button>
+          <button class="paint-btn" data-color="2">Lila</button>
+          <button class="paint-btn" data-color="3">Blå</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <p class="label">Offline på telefon</p>
+        <ol>
+          <li>Öppna sidan i mobilens webbläsare.</li>
+          <li>Tryck “Lägg till på hemskärmen”.</li>
+          <li>Öppna appen från hemskärmen – den fungerar offline efter första laddning.</li>
+        </ol>
+      </section>
     </main>
 
     <script src="app.js"></script>
