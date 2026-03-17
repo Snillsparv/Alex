@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rutnätsminne</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#111827" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="top">
+        <h1>Rutnätsminne</h1>
+        <p class="subtitle">Memorera mönstret i 60 sekunder. Fyll i och rätta.</p>
+      </header>
+
+      <section class="panel">
+        <p class="label">Välj läge</p>
+        <div class="mode-buttons">
+          <button id="mode-2" class="mode-btn active" data-mode="2">2 färger<br /><small>12 gula + 12 lila</small></button>
+          <button id="mode-3" class="mode-btn" data-mode="3">3 färger<br /><small>9 gula + 9 lila + 9 blå</small></button>
+        </div>
+
+        <div class="main-actions">
+          <button id="start-btn" class="primary">Starta ny omgång</button>
+          <button id="check-btn" class="secondary" disabled>Rätta</button>
+        </div>
+
+        <div class="timer-box">
+          <p class="timer-label">Tid kvar</p>
+          <p id="timer" class="timer">60</p>
+        </div>
+
+        <p><strong>Fas:</strong> <span id="phase">Tryck på “Starta ny omgång”.</span></p>
+        <p id="result" class="result"></p>
+      </section>
+
+      <section class="board-wrapper">
+        <div id="board" class="board" aria-label="6 gånger 6 rutnät"></div>
+      </section>
+
+      <section class="panel palette-panel">
+        <p class="label">Färg att fylla i (under återkallning)</p>
+        <div class="palette" id="palette">
+          <button class="paint-btn active" data-color="0">Tom</button>
+          <button class="paint-btn" data-color="1">Gul</button>
+          <button class="paint-btn" data-color="2">Lila</button>
+          <button class="paint-btn" data-color="3">Blå</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <p class="label">Offline på telefon</p>
+        <ol>
+          <li>Öppna sidan i mobilens webbläsare.</li>
+          <li>Tryck “Lägg till på hemskärmen”.</li>
+          <li>Öppna appen från hemskärmen – den fungerar offline efter första laddning.</li>
+        </ol>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
