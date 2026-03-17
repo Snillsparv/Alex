@@ -127,7 +127,7 @@ function beginInput() {
 
 function onCellClick(index) {
   if (phase !== 'input') return;
-  userGrid[index] = selectedPaint;
+  userGrid[index] = userGrid[index] === selectedPaint ? 0 : selectedPaint;
   const cell = boardEl.children[index];
   cell.dataset.color = String(userGrid[index]);
   if (checked) {
