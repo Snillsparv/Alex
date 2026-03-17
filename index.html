@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rutnätsminne</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#111827" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <h1>Rutnätsminne</h1>
+      <p class="subtitle">Memorera mönstret på 60 sekunder, fyll i och rätta.</p>
+
+      <section class="controls">
+        <fieldset>
+          <legend>Färgläge</legend>
+          <label>
+            <input type="radio" name="mode" value="2" checked />
+            2 färger (12 gula + 12 lila)
+          </label>
+          <label>
+            <input type="radio" name="mode" value="3" />
+            3 färger (9 gula + 9 lila + 9 blå)
+          </label>
+        </fieldset>
+
+        <div class="buttons">
+          <button id="start-btn">Starta ny omgång</button>
+          <button id="check-btn" disabled>Rätta</button>
+        </div>
+
+        <div class="status">
+          <p><strong>Fas:</strong> <span id="phase">Tryck på “Starta ny omgång”.</span></p>
+          <p><strong>Tid kvar:</strong> <span id="timer">60</span> sek</p>
+          <p id="result"></p>
+        </div>
+      </section>
+
+      <section class="board-wrapper">
+        <div id="board" class="board" aria-label="6 gånger 6 rutnät"></div>
+      </section>
+
+      <details class="legend">
+        <summary>Färger i fyll-i-fas</summary>
+        <ul>
+          <li><span class="dot yellow"></span> Gul</li>
+          <li><span class="dot purple"></span> Lila</li>
+          <li><span class="dot blue"></span> Blå (bara i 3-färgersläge)</li>
+          <li>Tryck flera gånger på en ruta för att växla färg.</li>
+        </ul>
+      </details>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
