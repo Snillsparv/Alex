@@ -1,0 +1,9 @@
+{
+  "name": "Rutnätsminne",
+  "short_name": "Rutnätsminne",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#111827",
+  "description": "Träna minnet genom att memorera färger i ett 6x6-rutnät."
+}
