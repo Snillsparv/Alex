@@ -1,6 +1,7 @@
 const boardEl = document.getElementById('board');
 const startBtn = document.getElementById('start-btn');
 const checkBtn = document.getElementById('check-btn');
+const showOriginalBtn = document.getElementById('show-original-btn');
 const phaseEl = document.getElementById('phase');
 const timerEl = document.getElementById('timer');
 const resultEl = document.getElementById('result');
@@ -18,6 +19,7 @@ let secondsLeft = MEMORIZE_SECONDS;
 let timerId;
 let checked = false;
 let selectedPaint = 0;
+let showingOriginal = false;
 
 function buildBoard() {
   boardEl.innerHTML = '';
@@ -97,6 +99,9 @@ function updateTimer() {
 function beginMemorize() {
   clearInterval(timerId);
   checked = false;
+  showingOriginal = false;
+  showOriginalBtn.disabled = true;
+  showOriginalBtn.textContent = 'Visa originalet';
   phase = 'memorize';
   secondsLeft = MEMORIZE_SECONDS;
   updateTimer();
@@ -123,6 +128,7 @@ function beginInput() {
   phaseEl.textContent = 'Välj färg längst ner och klicka i rutorna. Tryck sedan på Rätta.';
   paintGrid(userGrid);
   checkBtn.disabled = false;
+  showOriginalBtn.disabled = !checked;
 }
 
 function onCellClick(index) {
@@ -132,6 +138,9 @@ function onCellClick(index) {
   cell.dataset.color = String(userGrid[index]);
   if (checked) {
     checked = false;
+    showingOriginal = false;
+    showOriginalBtn.textContent = 'Visa originalet';
+    showOriginalBtn.disabled = true;
     resultEl.textContent = 'Ändring gjord. Tryck Rätta igen för ny kontroll.';
     [...boardEl.children].forEach((node) => node.classList.remove('correct', 'wrong'));
   }
@@ -169,6 +178,25 @@ function checkAnswer() {
   }, 0);
 
   resultEl.textContent = `Rätt färg på ${coloredCorrect}/${coloredTarget} markerade rutor. Exakt totalträff: ${exactMatches}/36.`;
+  showOriginalBtn.disabled = false;
+  showingOriginal = false;
+  showOriginalBtn.textContent = 'Visa originalet';
+}
+
+function toggleOriginal() {
+  if (phase !== 'input' || !checked) return;
+
+  showingOriginal = !showingOriginal;
+  if (showingOriginal) {
+    paintGrid(targetGrid);
+    showOriginalBtn.textContent = 'Visa ditt svar';
+    phaseEl.textContent = 'Originalet visas. Klicka igen för att se ditt svar.';
+  } else {
+    paintGrid(userGrid);
+    checkAnswer();
+    showOriginalBtn.textContent = 'Visa originalet';
+    phaseEl.textContent = 'Välj färg längst ner och klicka i rutorna. Tryck sedan på Rätta.';
+  }
 }
 
 modeButtons.forEach((button) => {
@@ -189,6 +217,7 @@ paintButtons.forEach((button) => {
 
 startBtn.addEventListener('click', beginMemorize);
 checkBtn.addEventListener('click', checkAnswer);
+showOriginalBtn.addEventListener('click', toggleOriginal);
 
 setMode(2);
 setSelectedPaint(0);
