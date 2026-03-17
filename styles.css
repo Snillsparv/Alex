@@ -68,7 +68,7 @@ h1 { margin: 0.1rem 0; font-size: clamp(1.8rem, 4.8vw, 2.5rem); }
 .mode-btn small { color: #cbd5e1; font-weight: 500; }
 .mode-btn.active { border-color: #22d3ee; box-shadow: 0 0 0 3px #0891b233; }
 
-.main-actions { display: flex; gap: 0.6rem; margin: 0.8rem 0; }
+.main-actions { display: flex; gap: 0.6rem; margin: 0.8rem 0; flex-wrap: wrap; }
 
 button {
   appearance: none;
@@ -81,6 +81,7 @@ button {
 
 .primary { flex: 1; background: linear-gradient(180deg, #16a34a, #15803d); }
 .secondary { flex: 1; background: linear-gradient(180deg, #3b82f6, #1d4ed8); }
+.tertiary { flex: 1; background: linear-gradient(180deg, #64748b, #475569); }
 button:disabled { opacity: 0.5; }
 
 .timer-box {
